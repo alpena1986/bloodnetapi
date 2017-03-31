@@ -1,0 +1,42 @@
+<b:beans xmlns="http://www.springframework.org/schema/security" xmlns:b="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <!-- <http> -->
+    <!-- <intercept-url pattern="/**" access="ROLE_USER" /> -->
+
+    <!-- </http> -->
+    <!-- ... -->
+    <!-- <intercept-url pattern="/*" access="permitAll"/> -->
+    <!-- <headers> -->
+    <!-- <frame-options policy="DENY" /> -->
+    <!-- <hsts disabled="true"/> -->
+    <!-- </headers> -->
+    <!-- </http> -->
+
+
+    <!-- <user-service> -->
+    <!-- <user name="user" password="password" authorities="ROLE_USER" /> -->
+    <!-- </user-service> -->
+
+
+    <http auto-config='true'>
+        <intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+        <headers>
+            <frame-options policy="DENY" />
+        </headers>
+        <form-login />
+        <logout />
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="jimi" password="jimispassword" authorities="ROLE_USER, ROLE_ADMIN" />
+                <user name="bob" password="bobspassword" authorities="ROLE_USER" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+</b:beans>

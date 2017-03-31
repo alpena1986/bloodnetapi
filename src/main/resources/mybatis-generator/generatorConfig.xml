@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="C:\Users\alpena\.m2\repository\mysql\mysql-connector-java\6.0.6\mysql-connector-java-6.0.6.jar"/>
+    <context id="my" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="false"/>
+           
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" 
+        	connectionURL="jdbc:mysql://rm-bp1wag664oqr93du9o.mysql.rds.aliyuncs.com:3306/bloodnet?serverTimezone=UTC&amp;useSSL=false&amp;nullNamePatternMatchesAll=true" userId="root" password="$Toor0602"/>
+
+        <javaModelGenerator targetPackage="com.bloodnet.model" targetProject="C:\Users\alpena\git\bloodnet\bloodnet\src\main\java">
+<!--             <property name="enableSubPackages" value="true"/> -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.bloodnet.mappers" targetProject="C:\Users\alpena\git\bloodnet\bloodnet\src\main\java">
+<!--             <property name="enableSubPackages" value="true"/> -->
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.bloodnet.mappers" targetProject="C:\Users\alpena\git\bloodnet\bloodnet\src\main\java" type="XMLMAPPER">
+<!--             <property name="enableSubPackages" value="true"/> -->
+        </javaClientGenerator>
+
+        <!--<table tableName="T_FEE_AGTBILL" domainObjectName="FeeAgentBill"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>-->
+
+        <table schema="bloodnet" tableName="CTAS_FEE_BASE" domainObjectName="FeeBase"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!--<columnRenamingRule searchString="^D_" replaceString=""/>-->
+        </table>
+		<table tableName="tbl_human" domainObjectName="TblHuman" ></table>
+		<table tableName="tbl_seq" domainObjectName="TblSeq" ></table>
+		<table tableName="tbl_father_son" domainObjectName="TblFatherSon" ></table>
+		<table tableName="tbl_mother_son" domainObjectName="TblMotherSon" ></table>
+    </context>
+</generatorConfiguration>
