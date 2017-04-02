@@ -3,6 +3,7 @@
 	<name>bloodnetapi</name>
 	<comment></comment>
 	<projects>
+		<project>bloodnetlib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

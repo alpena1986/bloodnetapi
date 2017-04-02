@@ -3,6 +3,9 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <dependent-module archiveName="bloodnetlib.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bloodnetlib/bloodnetlib">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="bloodnet"/>
         <property name="java-output-path" value="/bloodnetapi/target/classes"/>
         <property name="component.exclusion.patterns" value="%regex[WEB-INF/lib/*.*]"/>
