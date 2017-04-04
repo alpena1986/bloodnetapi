@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bloodnet.api.controllers.com.BaseController;
-import com.bloodnet.api.form.Session;
 import com.bloodnet.api.model.TblUser;
 import com.bloodnet.api.services.SessionService;
+import com.bloodnet.lib.Session;
 
 @RestController
-@RequestMapping("/session")
+@RequestMapping("/sessions")
 public class SessionController extends BaseController {
 	
 	@Autowired
