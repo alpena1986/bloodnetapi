@@ -15,16 +15,16 @@
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" 
         	connectionURL="jdbc:mysql://rm-bp1wag664oqr93du9o.mysql.rds.aliyuncs.com:3306/bloodnet?serverTimezone=UTC&amp;useSSL=false&amp;nullNamePatternMatchesAll=true" userId="root" password="$Toor0602"/>
 
-        <javaModelGenerator targetPackage="com.bloodnet.model" targetProject="C:\Users\alpena\git\bloodnet\bloodnet\src\main\java">
+        <javaModelGenerator targetPackage="com.bloodnet.api.model" targetProject="C:\Users\alpena\git\bloodnetapi\src\main\java">
 <!--             <property name="enableSubPackages" value="true"/> -->
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.bloodnet.mappers" targetProject="C:\Users\alpena\git\bloodnet\bloodnet\src\main\java">
+        <sqlMapGenerator targetPackage="com.bloodnet.api.mappers" targetProject="C:\Users\alpena\git\bloodnetapi\src\main\java">
 <!--             <property name="enableSubPackages" value="true"/> -->
         </sqlMapGenerator>
 
-        <javaClientGenerator targetPackage="com.bloodnet.mappers" targetProject="C:\Users\alpena\git\bloodnet\bloodnet\src\main\java" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="com.bloodnet.api.mappers" targetProject="C:\Users\alpena\git\bloodnetapi\src\main\java" type="XMLMAPPER">
 <!--             <property name="enableSubPackages" value="true"/> -->
         </javaClientGenerator>
 
@@ -39,9 +39,16 @@
                selectByExampleQueryId="false">
             <!--<columnRenamingRule searchString="^D_" replaceString=""/>-->
         </table>
-		<table tableName="tbl_human" domainObjectName="TblHuman" ></table>
-		<table tableName="tbl_seq" domainObjectName="TblSeq" ></table>
-		<table tableName="tbl_father_son" domainObjectName="TblFatherSon" ></table>
-		<table tableName="tbl_mother_son" domainObjectName="TblMotherSon" ></table>
+		<table tableName="tbl_relation_father_daughter" domainObjectName="TblRelationFatherDaughter" ></table>
+		<table tableName="tbl_relation_father_son" domainObjectName="TblRelationFatherSon" ></table>
+		<table tableName="tbl_relation_mother_daughter" domainObjectName="TblRelationMotherDaughter" ></table>
+		<table tableName="tbl_relation_mother_son" domainObjectName="TblRelationMotherSon" ></table>
+		<table tableName="tbl_relation_spouse" domainObjectName="TblRelationSpouse" ></table>
+		<table tableName="tbl_relation_stepfather_daughter" domainObjectName="TblRelationStepfatherDaughter" ></table>
+		<table tableName="tbl_relation_stepfather_son" domainObjectName="TblRelationStepfatherSon" ></table>
+		<table tableName="tbl_relation_stepmother_daughter" domainObjectName="TblRelationStepmotherDaughter" ></table>
+		<table tableName="tbl_relation_stepmother_son" domainObjectName="TblRelationStepmotherSon" ></table>
+		<table tableName="tbl_profile" domainObjectName="TblProfile" ></table>
+		<table tableName="tbl_user" domainObjectName="TblUser" ></table>
     </context>
 </generatorConfiguration>
