@@ -13,7 +13,7 @@ import com.bloodnet.api.services.com.CommonService;
 
 
 @Service
-public class SessionService extends BaseService {
+public class UserService extends BaseService {
 
 	
 	@Autowired
@@ -22,11 +22,10 @@ public class SessionService extends BaseService {
 	@Autowired
 	private TblUserMapper tblUserMapper;
 	
-	public TblUser getUser(String userId, String password){
+	public TblUser getUser(String userId){
 		TblUserExample example = new TblUserExample();
 		TblUserExample.Criteria criteria = example.createCriteria();
 		criteria.andUserIdEqualTo(userId);
-		criteria.andPasswordEqualTo(password);
 		List<TblUser> userList = tblUserMapper.selectByExample(example);
 		if(userList != null && userList.size() > 0){
 			return userList.get(0);

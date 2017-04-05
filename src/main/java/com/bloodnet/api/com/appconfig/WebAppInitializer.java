@@ -7,9 +7,11 @@ import javax.servlet.ServletRegistration;
 
 //import jp.ne.uvas.lilliputway.admin.com.LogSessionIdFilter;
 
+
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.FrameworkServlet;
@@ -34,6 +36,11 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 //		FilterRegistration.Dynamic logSessionIdFilter = servletContext.addFilter("logSessionIdFilter", new LogSessionIdFilter());
 //		logSessionIdFilter.addMappingForUrlPatterns(null, false, "/*");
 
+		DelegatingFilterProxy delegatingFilterProxy = new DelegatingFilterProxy();
+		delegatingFilterProxy.setTargetFilterLifecycle(true);
+		FilterRegistration.Dynamic shiroFilter = servletContext.addFilter("shiroFilter", delegatingFilterProxy);
+		shiroFilter.addMappingForUrlPatterns(null, false, "/*");
+		
 		// xss filter
 		// FilterRegistration.Dynamic xSSFilter =
 		// servletContext.addFilter("XSSFilter", new XSSFilter());
