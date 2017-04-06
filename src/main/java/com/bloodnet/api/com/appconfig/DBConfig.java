@@ -13,6 +13,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -30,27 +31,31 @@ import com.bloodnet.api.com.consts.Consts;
 @Configuration
 @EnableTransactionManagement
 @PropertySource(value = {"classpath:properties\\" + Consts.PROPERTY_FILE_JDBC})
-public class DBConfig  extends WebMvcConfigurationSupport  implements TransactionManagementConfigurer{
+public class DBConfig  extends WebMvcConfigurationSupport  implements TransactionManagementConfigurer, EnvironmentAware{
 
-    @Autowired
-    private Environment env;
+    private Environment environment;
+    
+    @Override
+    public void setEnvironment(final Environment environment) {
+        this.environment = environment;
+    }
     
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(env.getProperty("jdbc.url"));
-        dataSource.setUsername(env.getProperty("jdbc.username"));
-        dataSource.setPassword(env.getProperty("jdbc.password"));
+        dataSource.setDriverClassName(environment.getProperty("jdbc.driverClassName"));
+        dataSource.setUrl(environment.getProperty("jdbc.url"));
+        dataSource.setUsername(environment.getProperty("jdbc.username"));
+        dataSource.setPassword(environment.getProperty("jdbc.password"));
         dataSource.setInitialSize(20);
         return dataSource;
     }
     
     @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
-        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        return sessionFactory.getObject();
+        SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
+        sessionFactoryBean.setDataSource(dataSource());
+        return sessionFactoryBean.getObject();
     }
     
     @Bean
@@ -84,12 +89,12 @@ public class DBConfig  extends WebMvcConfigurationSupport  implements Transactio
 		return manager;
 	}
 	
-	@Bean
+	@Bean(name = "shiroFilter")
 	public ShiroFilterFactoryBean shiroFilter(){
-		ShiroFilterFactoryBean filter = new ShiroFilterFactoryBean();
-		filter.setSecurityManager(securityManager());
-		filter.setFilterChainDefinitions("//** = anon");
-		return filter;
+		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
+		bean.setSecurityManager(securityManager());
+		bean.setFilterChainDefinitions("//** = anotherFilter");
+		return bean;
 	}
 	
 	@Bean
@@ -102,6 +107,7 @@ public class DBConfig  extends WebMvcConfigurationSupport  implements Transactio
 	@Bean LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
 		return new LifecycleBeanPostProcessor();
 	}
+	
 	@Bean
 	@DependsOn("lifecycleBeanPostProcessor")
 	public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
