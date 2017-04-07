@@ -26,7 +26,7 @@ public class AcidService extends BaseService {
 	public TblAcid getAcid(String acid){
 		TblAcidExample example = new TblAcidExample();
 		TblAcidExample.Criteria criteria = example.createCriteria();
-		criteria.andUserIdEqualTo(acid);
+		criteria.andAcidEqualTo(acid);
 		List<TblAcid> acidList = tblAcidMapper.selectByExample(example);
 		if(acidList != null && acidList.size() > 0){
 			return acidList.get(0);

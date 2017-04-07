@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.bloodnet.api.mappers.TblUserMapper;
@@ -35,7 +36,7 @@ public class UserService extends BaseService {
 		return null;
 	}
 	
-	public void createUser(User user) throws SQLException{
+	public void createUser(User user) throws DataAccessException{
 		TblUser tblUser = new TblUser();
 		tblUser.setUserId(user.getId());
 		tblUser.setPassword(user.getPassword());

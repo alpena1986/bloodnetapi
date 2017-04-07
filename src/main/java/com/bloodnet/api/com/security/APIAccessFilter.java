@@ -3,6 +3,7 @@ package com.bloodnet.api.com.security;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -48,16 +49,19 @@ public class APIAccessFilter extends AccessControlFilter {
 
 		ShiroHttpServletRequest request = (ShiroHttpServletRequest)req;
 		String acid = request.getHeader("acid");
-		TblAcid tblAcid = acidService.getAcid(acid);
+		if(StringUtils.isNotBlank(acid)) {
+			TblAcid tblAcid = acidService.getAcid(acid);
 
-		try {
-			if (tblAcid == null) {
-				throw new AuthenticationException();
+			try {
+				if (tblAcid == null) {
+					throw new AuthenticationException();
+				}
+				return true;
+			} catch (AuthenticationException e) {
+				return false;
 			}
-			return true;
-		} catch (AuthenticationException e) {
-			return false;
 		}
+		return false;
 	}
 
 	/**
