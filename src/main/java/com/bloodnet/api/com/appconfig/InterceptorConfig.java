@@ -8,17 +8,12 @@ import org.springframework.web.servlet.handler.MappedInterceptor;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
 
-import com.bloodnet.api.com.interceptor.CSRFInterceptor;
 
 
 @Configuration
 @EnableWebMvc
 public class InterceptorConfig { 
     
-    @Bean
-    public MappedInterceptor CSRFInterceptor(){
-        return new MappedInterceptor(null, new String[]{"/assets/**"}, new CSRFInterceptor());
-    }
     
     @Bean
     public MappedInterceptor WebContentInterceptor(){

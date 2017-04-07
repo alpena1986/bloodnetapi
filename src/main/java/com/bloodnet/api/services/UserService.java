@@ -1,5 +1,6 @@
 package com.bloodnet.api.services;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -34,7 +35,7 @@ public class UserService extends BaseService {
 		return null;
 	}
 	
-	public void createUser(User user){
+	public void createUser(User user) throws SQLException{
 		TblUser tblUser = new TblUser();
 		tblUser.setUserId(user.getId());
 		tblUser.setPassword(user.getPassword());
