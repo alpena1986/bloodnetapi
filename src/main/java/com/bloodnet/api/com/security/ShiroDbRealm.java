@@ -36,14 +36,14 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(final AuthenticationToken token) throws AuthenticationException {
 
-	    //トークンからユーザ名を取得する
 	    final UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 	    final String userName = upToken.getUsername();
-	    final String password = String.valueOf(upToken.getPassword());
 
-	    //DBからユーザ情報を取得する。
 	    TblUser user = userService.getUser(userName);
-
+	    if (user == null) {
+	    	return null;
+	    }
+	    
 	    //Sha256CredentialsMatcher credentialsMatcher = new Sha256CredentialsMatcher();
 	    //super.setCredentialsMatcher(credentialsMatcher);
 	    //credentialsMatcher.setHashIterations(1);
@@ -52,7 +52,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	    //final Sha256Hash credentials = Sha256Hash.fromBase64String(user.getPassword());
 	    //credentials.setSalt(ByteSource.Util.bytes(Base64.decode(user.getSalt())));
 
-	    final SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userName, password, getName());
+	    final SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(userName, user.getPassword(), getName());
 	    //info.setCredentialsSalt(credentials.getSalt());
 
 	    return info;
