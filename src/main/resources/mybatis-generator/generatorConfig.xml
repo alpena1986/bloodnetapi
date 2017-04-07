@@ -50,5 +50,6 @@
 		<table tableName="tbl_relation_stepmother_son" domainObjectName="TblRelationStepmotherSon" ></table>
 		<table tableName="tbl_profile" domainObjectName="TblProfile" ></table>
 		<table tableName="tbl_user" domainObjectName="TblUser" ></table>
+		<table tableName="tbl_acid" domainObjectName="TblAcid" ></table>
     </context>
 </generatorConfiguration>

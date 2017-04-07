@@ -1,9 +1,5 @@
 package com.bloodnet.api.controllers;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,28 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bloodnet.api.controllers.com.BaseController;
 import com.bloodnet.api.services.AcidService;
 import com.bloodnet.api.services.UserService;
-import com.bloodnet.lib.Session;
+import com.bloodnet.lib.User;
 
 @RestController
-@RequestMapping("/sessions")
-public class SessionController extends BaseController {
+@RequestMapping("/users")
+public class UserController extends BaseController {
 	
 	@Autowired
-	private UserService sessionService;
+	private UserService userService;
 
 	@Autowired
 	private AcidService acidService;
 	
     @RequestMapping(value="", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String init(@RequestBody Session session) throws Exception {
-    	
-		UsernamePasswordToken token = new UsernamePasswordToken(session.getUserId(), session.getPassword());
-		final Subject subject = SecurityUtils.getSubject();
-		try{
-			subject.login(token);
-			return acidService.createAcid(session.getUserId());
-		}catch(AuthenticationException e){
-			return "";
-		}
+    public void init(@RequestBody User user) throws Exception {
+    	userService.createUser(user);
     }
 }

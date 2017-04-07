@@ -1,4 +1,4 @@
-package com.bloodnet.api.com.appconfig;
+package com.bloodnet.api.com.security;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -8,8 +8,13 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import com.bloodnet.api.model.TblAcid;
+import com.bloodnet.api.services.AcidService;
 
 /**
  * MySQL認証用に作成した独自フィルタです。
@@ -18,6 +23,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class APIAccessFilter extends AccessControlFilter {
 
+	@Autowired
+	public AcidService acidService;
+	
 	public APIAccessFilter() {
 		super();
 	}
@@ -36,28 +44,19 @@ public class APIAccessFilter extends AccessControlFilter {
 	 * @return boolean true:アクセス許可
 	 */
 	@Override
-	protected boolean isAccessAllowed(final ServletRequest req,
-			final ServletResponse rsp, final Object obj) throws Exception {
+	protected boolean isAccessAllowed(final ServletRequest req, final ServletResponse rsp, final Object obj) throws Exception {
 
-		// ユーザIDとパスワードを使ってログイン実行する。
-		String userName = req.getParameter("user_name");
-
-		String password = req.getParameter("password");
-
-		UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
-		final Subject subject = SecurityUtils.getSubject();
+		ShiroHttpServletRequest request = (ShiroHttpServletRequest)req;
+		String acid = request.getHeader("acid");
+		TblAcid tblAcid = acidService.getAcid(acid);
 
 		try {
-
-			subject.login(token);
-
+			if (tblAcid == null) {
+				throw new AuthenticationException();
+			}
 			return true;
-
-			// loginメソッドで認証失敗すると例外が飛んできます
 		} catch (AuthenticationException e) {
-
 			return false;
-
 		}
 	}
 

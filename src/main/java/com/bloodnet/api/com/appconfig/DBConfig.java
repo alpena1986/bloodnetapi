@@ -1,10 +1,12 @@
 package com.bloodnet.api.com.appconfig;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.remoting.SecureRemoteInvocationExecutor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -12,7 +14,6 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,8 @@ import org.springframework.transaction.annotation.TransactionManagementConfigure
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import com.bloodnet.api.com.consts.Consts;
+import com.bloodnet.api.com.security.APIAccessFilter;
+import com.bloodnet.api.com.security.ShiroDbRealm;
 
 @Configuration
 @EnableTransactionManagement
@@ -74,18 +77,18 @@ public class DBConfig  extends WebMvcConfigurationSupport  implements Transactio
     }
     
 	@Bean
-	public JdbcRealm jdbcRealm(){
-		JdbcRealm realm = new JdbcRealm();
-		realm.setDataSource(dataSource());
-		realm.setPermissionsLookupEnabled(true);
-		realm.setAuthenticationQuery("SELECT password FROM tbl_user WHERE user_id = ?");
+	public ShiroDbRealm shiroJdbcRealm(){
+		ShiroDbRealm realm = new ShiroDbRealm();
+		//realm.setDataSource(dataSource());
+		//realm.setPermissionsLookupEnabled(true);
+		//realm.setAuthenticationQuery("SELECT password FROM tbl_user WHERE user_id = ?");
 		return realm;
 	}
 	
 	@Bean 
 	public DefaultWebSecurityManager securityManager(){
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
-		manager.setRealm(jdbcRealm());
+		manager.setRealm(shiroJdbcRealm());
 		return manager;
 	}
 	
@@ -93,8 +96,18 @@ public class DBConfig  extends WebMvcConfigurationSupport  implements Transactio
 	public ShiroFilterFactoryBean shiroFilter(){
 		ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
 		bean.setSecurityManager(securityManager());
-		bean.setFilterChainDefinitions("//** = anotherFilter");
+        Map<String, String> definitionsMap = new HashMap<>();
+        definitionsMap.put("/**", "apiAccessFilter");
+        definitionsMap.put("/sessions/**", "anon");
+        definitionsMap.put("/users/**", "anon");
+		bean.setFilterChainDefinitionMap(definitionsMap);
 		return bean;
+	}
+	
+	@Bean(name = "apiAccessFilter")
+	public APIAccessFilter apiAccessFilter(){
+		APIAccessFilter apiAccessFilter = new APIAccessFilter();
+		return apiAccessFilter;
 	}
 	
 	@Bean
