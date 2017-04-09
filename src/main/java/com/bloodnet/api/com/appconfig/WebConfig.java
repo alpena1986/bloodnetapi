@@ -8,20 +8,24 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 
-@Configuration
-//@EnableWebMvc  
+@Configuration 
 @MapperScan("com.bloodnet.api.mappers")
-public class WebConfig extends WebMvcConfigurerAdapter  {
+public class WebConfig {
 	
 	/** アプリケーションのデフォルトロケール */
 	public static final Locale APPLICATION_DEFAULT_LOCALE = Locale.JAPAN;
@@ -104,23 +108,15 @@ public class WebConfig extends WebMvcConfigurerAdapter  {
         return new RestTemplate();
     }
     
-    @Override
-    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+    //@Override
+    //public void addResourceHandlers(final ResourceHandlerRegistry registry) {
     //    registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
      //   registry.addResourceHandler("/favicon.ico").addResourceLocations("/assets/favicon.ico");
-    }
+    //}
     
-    @Override
-    public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
-        // Turn off suffix-based content negotiation
-        configurer.favorPathExtension(false);
-        configurer.favorParameter(false);
-        /*
-         *So what happens is that Spring is trying to present the result to in a content type it can't find a converter to.
-         *To solve this you need to tell spring to turn off suffix-based content negotiation 
-         *what's happening is likely that the Java Activation Framework is recognising some of your suffixes
-         *and returning a media type for them 
-         * - the .c extension probably returns text/x-c since that's causing an exception.
-         */
-    }
+
+
+
+    
+
 }

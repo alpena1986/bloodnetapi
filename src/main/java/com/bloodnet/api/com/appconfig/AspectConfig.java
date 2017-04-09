@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @Configuration
-public class AspectConfig  extends WebMvcConfigurationSupport{
+public class AspectConfig{
 
 //    @Bean
 //    public ControllerStartLogAspect controllerStartLogAspect() {

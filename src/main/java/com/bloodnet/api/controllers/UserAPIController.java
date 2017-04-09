@@ -45,15 +45,14 @@ public class UserAPIController extends BaseController {
     /**
      * 获取一个已经存在的用户
      */
-    @RequestMapping(value="/{id}", method=RequestMethod.GET,  consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/{id:.+}", method=RequestMethod.GET,  consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     public User get(@PathVariable String id) throws Exception {
-    	String userId = "asdffds";
-    	if (StringUtils.isBlank(userId)) {
+    	if (StringUtils.isBlank(id)) {
     		throw new BadRequestException();
     	}
-    	User user = userService.getUser(userId);
+    	User user = userService.getUser(id);
     	if(user == null){
-    		throw new UserNotFoundException(userId);
+    		throw new UserNotFoundException(id);
     	}
     	return user;
     }

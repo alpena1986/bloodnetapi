@@ -34,7 +34,7 @@ import com.bloodnet.api.com.security.ShiroDbRealm;
 @Configuration
 @EnableTransactionManagement
 @PropertySource(value = {"classpath:properties\\" + Consts.PROPERTY_FILE_JDBC})
-public class DBConfig  extends WebMvcConfigurationSupport  implements TransactionManagementConfigurer, EnvironmentAware{
+public class DBConfig implements TransactionManagementConfigurer, EnvironmentAware{
 
     private Environment environment;
     
@@ -98,6 +98,7 @@ public class DBConfig  extends WebMvcConfigurationSupport  implements Transactio
 		bean.setSecurityManager(securityManager());
         Map<String, String> definitionsMap = new HashMap<>();
         definitionsMap.put("/**", "apiAccessFilter");
+        definitionsMap.put("/*.*", "apiAccessFilter");
         definitionsMap.put("/sessions/**", "anon");
         definitionsMap.put("/users/**", "anon");
 		bean.setFilterChainDefinitionMap(definitionsMap);
