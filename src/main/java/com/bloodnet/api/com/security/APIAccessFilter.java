@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.bloodnet.api.model.TblAcid;
-import com.bloodnet.api.services.AcidService;
+import com.bloodnet.api.services.AcidAPIService;
 
 /**
  * MySQL認証用に作成した独自フィルタです。
@@ -25,7 +25,7 @@ import com.bloodnet.api.services.AcidService;
 public class APIAccessFilter extends AccessControlFilter {
 
 	@Autowired
-	public AcidService acidService;
+	public AcidAPIService acidService;
 	
 	public APIAccessFilter() {
 		super();

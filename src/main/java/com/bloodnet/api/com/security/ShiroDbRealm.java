@@ -15,7 +15,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.bloodnet.api.model.TblUser;
-import com.bloodnet.api.services.UserService;
+import com.bloodnet.api.services.UserAPIService;
+import com.bloodnet.lib.User;
 
 @Scope("prototype")
 @Component
@@ -25,7 +26,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	public DataSource dataSource;
 	
 	@Autowired
-	public UserService userService;
+	public UserAPIService userService;
 
 	/**
 	 * 認証処理
@@ -39,7 +40,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	    final UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 	    final String userName = upToken.getUsername();
 
-	    TblUser user = userService.getUser(userName);
+	    User user = userService.getUser(userName);
 	    if (user == null) {
 	    	return null;
 	    }

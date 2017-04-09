@@ -1,6 +1,5 @@
 package com.bloodnet.api.services;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -17,7 +16,7 @@ import com.bloodnet.lib.User;
 
 
 @Service
-public class UserService extends BaseService {
+public class UserAPIService extends BaseService {
 	
 	@Autowired
 	private CommonService commonService;
@@ -25,13 +24,18 @@ public class UserService extends BaseService {
 	@Autowired
 	private TblUserMapper tblUserMapper;
 	
-	public TblUser getUser(String userId){
+	public User getUser(String userId){
 		TblUserExample example = new TblUserExample();
 		TblUserExample.Criteria criteria = example.createCriteria();
 		criteria.andUserIdEqualTo(userId);
 		List<TblUser> userList = tblUserMapper.selectByExample(example);
 		if(userList != null && userList.size() > 0){
-			return userList.get(0);
+			User user = new User();
+			user.setId(userList.get(0).getUserId());
+			user.setPassword(userList.get(0).getPassword());
+			user.setProfileId(userList.get(0).getProfileId());
+			user.setSecondaryEmail(userList.get(0).getSecondaryEmail());
+			return user;
 		}
 		return null;
 	}

@@ -14,7 +14,7 @@ import com.bloodnet.lib.Profile;
 
 
 @Service
-public class ProfileService extends BaseService {
+public class ProfileAPIService extends BaseService {
 	
 	@Autowired
 	private CommonService commonService;

@@ -14,7 +14,7 @@ import com.bloodnet.api.services.com.CommonService;
 
 
 @Service
-public class AcidService extends BaseService {
+public class AcidAPIService extends BaseService {
 
 	
 	@Autowired

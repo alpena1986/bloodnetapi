@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bloodnet.api.controllers.com.BaseController;
-import com.bloodnet.api.services.AcidService;
-import com.bloodnet.api.services.UserService;
+import com.bloodnet.api.services.AcidAPIService;
+import com.bloodnet.api.services.UserAPIService;
 import com.bloodnet.lib.Session;
 
 @RestController
 @RequestMapping("/sessions")
-public class SessionController extends BaseController {
+public class SessionAPIController extends BaseController {
 	
 	@Autowired
-	private UserService sessionService;
+	private UserAPIService sessionService;
 
 	@Autowired
-	private AcidService acidService;
+	private AcidAPIService acidService;
 	
     @RequestMapping(value="", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String init(@RequestBody Session session) throws Exception {
