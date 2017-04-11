@@ -262,7 +262,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
-					<webappDirectory>C:/tools/apache-tomcat-8.0.36/webapps/bloodnet</webappDirectory>
+					<webappDirectory>E:\doc\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\bloodnetapi</webappDirectory>
 					<packagingExcludes>
 						%regex[WEB-INF/lib/*.*]
 					</packagingExcludes>
