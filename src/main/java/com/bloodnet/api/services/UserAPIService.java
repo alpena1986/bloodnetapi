@@ -2,7 +2,6 @@ package com.bloodnet.api.services;
 
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -32,9 +31,8 @@ public class UserAPIService extends BaseService {
 		if(userList != null && userList.size() > 0){
 			User user = new User();
 			user.setId(userList.get(0).getUserId());
-			user.setPassword(userList.get(0).getPassword());
 			user.setProfileId(userList.get(0).getProfileId());
-			user.setSecondaryEmail(userList.get(0).getSecondaryEmail());
+			user.setEmail(userList.get(0).getEmail());
 			return user;
 		}
 		return null;
@@ -45,11 +43,8 @@ public class UserAPIService extends BaseService {
 		tblUser.setUserId(user.getId());
 		tblUser.setPassword(user.getPassword());
 		tblUser.setProfileId(user.getProfileId());
-		tblUser.setSecondaryEmail(user.getSecondaryEmail());
-		tblUser.setLastPasswordChangeYmd(new LocalDate().toString("yyyyMMdd"));
 		tblUser.setAccountStatus("0");
-		tblUser.setLoginFailedCnt(0);
-		tblUser.setLockFlg(false);
+		tblUser.setEmail(user.getEmail());
 		tblUser.setDelflg(false);
 		
 		tblUserMapper.insert(tblUser);

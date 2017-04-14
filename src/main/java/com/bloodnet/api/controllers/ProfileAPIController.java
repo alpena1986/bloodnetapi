@@ -13,6 +13,7 @@ import com.bloodnet.api.controllers.com.BaseController;
 import com.bloodnet.api.services.AcidAPIService;
 import com.bloodnet.api.services.ProfileAPIService;
 import com.bloodnet.lib.Profile;
+import com.bloodnet.lib.RestResponseBody;
 
 @RestController
 @RequestMapping("/profiles")
@@ -25,16 +26,17 @@ public class ProfileAPIController extends BaseController {
 	private AcidAPIService acidService;
 	
     @RequestMapping(value="", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void post(@RequestBody Profile profile) {
+    public RestResponseBody post(@RequestBody Profile profile) {
     	
     	if (StringUtils.isBlank(profile.getSex()) ||
     			StringUtils.isBlank(profile.getFamilyName()) ||
     			StringUtils.isBlank(profile.getFirstName()) ||
-    			StringUtils.isBlank(profile.getIdNumber()) ||
-    			StringUtils.isBlank(profile.getBirthdate())){
+    			StringUtils.isBlank(profile.getBirthYear())){
     		throw new BadRequestException();
     	}
     	profileService.createProfile(profile);
+    	return RestResponseBody.SUCCESS;
+    	
     }
     
     @RequestMapping(value="", method=RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)

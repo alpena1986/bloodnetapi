@@ -16,6 +16,7 @@ import com.bloodnet.api.com.exception.UserNotFoundException;
 import com.bloodnet.api.controllers.com.BaseController;
 import com.bloodnet.api.services.AcidAPIService;
 import com.bloodnet.api.services.UserAPIService;
+import com.bloodnet.lib.RestResponseBody;
 import com.bloodnet.lib.User;
 
 @RestController
@@ -34,9 +35,11 @@ public class UserAPIController extends BaseController {
 	 * @throws Exception
 	 */
     @RequestMapping(value="", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void post(@RequestBody User user) throws Exception {
+    public RestResponseBody post(@RequestBody User user) throws Exception {
     	try{
     		userService.createUser(user);
+    		return RestResponseBody.SUCCESS;
+    		
     	}catch (DuplicateKeyException ex) {
     		throw new UserAlreadyExistsException(user.getId());
     	}

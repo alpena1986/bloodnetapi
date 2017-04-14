@@ -48,9 +48,9 @@ public class APIAccessFilter extends AccessControlFilter {
 	protected boolean isAccessAllowed(final ServletRequest req, final ServletResponse rsp, final Object obj) throws Exception {
 
 		ShiroHttpServletRequest request = (ShiroHttpServletRequest)req;
-		String acid = request.getHeader("acid");
-		if(StringUtils.isNotBlank(acid)) {
-			TblAcid tblAcid = acidService.getAcid(acid);
+		String sessionId = request.getHeader("sessionId");
+		if(StringUtils.isNotBlank(sessionId)) {
+			TblAcid tblAcid = acidService.getAcid(sessionId);
 
 			try {
 				if (tblAcid == null) {

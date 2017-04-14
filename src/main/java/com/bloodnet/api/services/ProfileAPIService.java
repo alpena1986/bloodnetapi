@@ -28,8 +28,8 @@ public class ProfileAPIService extends BaseService {
 		tblProfile.setSex(profile.getSex());
 		tblProfile.setFamilyName(profile.getFamilyName());
 		tblProfile.setFirstName(profile.getFirstName());
-		tblProfile.setBirthdate(profile.getBirthdate());
 		tblProfile.setIdNumber(profile.getIdNumber());
+		tblProfile.setPhoneNo(profile.getPhoneNo());
 		tblProfile.setDelflg(false);
 		
 		tblProfileMapper.insert(tblProfile);

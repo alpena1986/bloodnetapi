@@ -27,15 +27,18 @@ public class SessionAPIController extends BaseController {
 	private AcidAPIService acidService;
 	
     @RequestMapping(value="", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String init(@RequestBody Session session) throws Exception {
+    public Session init(@RequestBody Session session) throws Exception {
     	
 		UsernamePasswordToken token = new UsernamePasswordToken(session.getUserId(), session.getPassword());
 		final Subject subject = SecurityUtils.getSubject();
 		try{
 			subject.login(token);
-			return acidService.createAcid(session.getUserId());
+			String sessionId = acidService.createAcid(session.getUserId());
+			Session result = new Session();
+			result.setSessionId(sessionId);
+			return result;
 		}catch(AuthenticationException e){
-			return "";
+			return null;
 		}
     }
 }
